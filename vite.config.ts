@@ -51,43 +51,11 @@ export default defineConfig({
   },
   build: {
     target: 'esnext',
-    outDir: 'dist', // Changed from 'build' to 'dist'
-    sourcemap: false, // Disable sourcemaps for production
-    chunkSizeWarningLimit: 1000, // Increase limit to 1000kb
+    outDir: 'dist',
+    sourcemap: false,
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          // More efficient chunking strategy
-          if (id.includes('node_modules')) {
-            // React core libraries
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'react-vendor';
-            }
-            
-            // Radix UI components
-            if (id.includes('@radix-ui')) {
-              return 'radix-vendor';
-            }
-            
-            // Icons and UI
-            if (id.includes('lucide-react')) {
-              return 'icons-vendor';
-            }
-            
-            // Form and utility libraries
-            if (id.includes('react-hook-form') || id.includes('class-variance-authority')) {
-              return 'utils-vendor';
-            }
-            
-            // Charts and data visualization
-            if (id.includes('recharts')) {
-              return 'charts-vendor';
-            }
-            
-            // All other node_modules
-            return 'vendor';
-          }
-        }
+        manualChunks: undefined
       }
     }
   },
